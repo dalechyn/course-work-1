@@ -1,8 +1,10 @@
 #include "stdio.h"
 #include "menu.h"
+#include "SortingArray3D.h"
+#include "SortingVector.h"
 
 typedef struct {
-    char * text;
+    char *text;
     unsigned int flag;
 } flagItem;
 
@@ -10,26 +12,31 @@ void clear() {
     printf("\033c");
 }
 
-void printExit(char * text) {
+void printExit(char *text) {
     printf("0. %s\n", text);
     printf("\nChoose: ");
 }
 
-int startMenu() {
+unsigned int startMenu() {
     int res = 0;
-    const int menuLength = 5;
-    const char menu[5][18] = {
+    const int labelsLength = 5;
+    const char labels[5][18] = {
             "Course Work SDA",
             "Written by",
             "Vladislav Dalechyn",
             "KV-81",
             "KPI 2018-2019"
     };
+    const int menuLength = 2;
+    const flagItem menu[2] = {
+            {"Exit",     FLAG_EXIT},
+            {"Continue", FLAG_MAIN_MENU}
+    };
 
-    for (int i = 0; i < menuLength; i++)
-        printf("%s\n", menu[i]);
-
-    printf("%s", "\n1. Continue\n");
+    for (int i = 0; i < labelsLength; i++)
+        printf("%s\n", labels[i]);
+    for (int i = 1; i < menuLength; i++)
+        printf("%d. %s\n", i, menu[i].text);
 
     printExit("Exit program");
 
@@ -41,7 +48,7 @@ int startMenu() {
 
     clear();
 
-    return res;
+    return menu[res].flag;
 }
 
 unsigned int mainMenu() {
@@ -72,17 +79,18 @@ unsigned int mainMenu() {
     return menu[res].flag;
 }
 
-int vectorSortingMenu() {
+unsigned int selectFillMenu() {
     int res;
     const int menuLength = 3;
-    const char menu[3][30] = {
-            "Ordered vector",
-            "Reverse-ordered vector",
-            "Randomized vector",
+    const flagItem menu[4] = {
+            {"Exit to Sort Menu",      FLAG_EXIT},
+            {"Ordered vector",         FLAG_ORDER1},
+            {"Reverse-ordered vector", FLAG_ORDER2},
+            {"Randomized vector",      FLAG_ORDER3},
     };
 
-    for (int i = 0; i < menuLength; i++)
-        printf("%d. %s\n", i + 1, menu[i]);
+    for (int i = 1; i < menuLength; i++)
+        printf("%d. %s\n", i, menu[i].text);
 
     printExit("Exit to Main Menu");
 
@@ -94,42 +102,17 @@ int vectorSortingMenu() {
 
     clear();
 
-    return res;
-}
-
-unsigned int selectArr3DSortMenu() {
-    int res;
-    const int menuLength = 4;
-    const flagItem menu[4] = {
-            {"Exit to Main Menu",   FLAG_MAIN_MENU},
-            {"Select1 algorithm",   FLAG_ARRAY3D_SORT1},
-            {"Select3 algorithm",   FLAG_ARRAY3D_SORT2},
-            {"Exchange3 algorithm", FLAG_ARRAY3D_SORT3}
-    };
-
-    for (int i = 1; i < menuLength; i++)
-        printf("%d. %s\n", i, menu[i].text);
-
-    printExit(menu[0].text);
-
-    scanf("%d", &res);
-    while (res < 0 || res > 4) {
-        printf("\nWrong input. Please print correct menu number\n");
-        scanf("%d", &res);
-    }
-
-    clear();
-
     return menu[res].flag;
 }
-unsigned int selectVecSortMenu() {
+
+unsigned int selectSortMenu() {
     int res;
     const int menuLength = 4;
     const flagItem menu[4] = {
-            {"Exit to Main Menu",   FLAG_MAIN_MENU},
-            {"Select1 algorithm",   FLAG_VECTOR_SORT1},
-            {"Select3 algorithm",   FLAG_VECTOR_SORT2},
-            {"Exchange3 algorithm", FLAG_VECTOR_SORT3}
+            {"Exit to Main Menu",   FLAG_EXIT},
+            {"Select1 algorithm",   FLAG_SORT1},
+            {"Select3 algorithm",   FLAG_SORT2},
+            {"Exchange3 algorithm", FLAG_SORT3}
     };
 
     for (int i = 1; i < menuLength; i++)
@@ -167,63 +150,73 @@ int helpMenu() {
 
 unsigned int menu(unsigned int flag) {
     clear();
-    int startMenuRes = 1;
-    if(!(flag & FLAG_MAIN_MENU)) {
-        startMenuRes = startMenu();
+    if (!(flag & FLAG_MAIN_MENU)) {
+        flag |= startMenu();
     }
-    switch (startMenuRes) {
-        case 0:
-            flag = FLAG_EXIT;
-            break;
-        case 1:
+    switch (flag & MASK_MAIN_MENU) {
+        case FLAG_MAIN_MENU:
             if (!(flag & MASK_LEVEL1_ITEMS)) {
                 unsigned int t = mainMenu();
-                if(t == FLAG_EXIT) {
-                    flag = FLAG_EXIT;
-                    break;
-                }
-                flag |= t;
-            };
-            switch (flag & (MASK_MAIN_MENU | MASK_LEVEL1_ITEMS)) {
+                flag = t == FLAG_EXIT ? FLAG_EXIT : flag | t;
+            }
+            switch (flag & MASK_LEVEL1_ITEMS) {
                 case FLAG_VECTOR_MEASUREMENT:
                     break;
                 case FLAG_ARRAY3D_MEASUREMENT:
                     break;
                 case FLAG_VECTOR_SORT:
-                    if (!(flag & MASK_LEVEL2_ITEMS)) {
-                        unsigned int t = selectVecSortMenu();
-                        if(t == FLAG_MAIN_MENU) {
-                            flag = FLAG_MAIN_MENU;
-                            break;
-                        }
-                        flag |= t;
-                    }
-                    switch (vectorSortingMenu()) {
-                        case FLAG_VECTOR_SORT1:
-                            break;
-                        case FLAG_VECTOR_SORT2:
-                            break;
-                        case FLAG_VECTOR_SORT3:
-                            break;
-                        default:
-                            break;
-                    }
-                    break;
                 case FLAG_ARRAY3D_SORT:
                     if (!(flag & MASK_LEVEL2_ITEMS)) {
-                        unsigned int t = selectArr3DSortMenu();
-                        if(t == FLAG_MAIN_MENU) {
-                            flag = FLAG_MAIN_MENU;
+                        unsigned int t = selectSortMenu();
+                        if (t == FLAG_EXIT) {
+                            flag &= MASK_MAIN_MENU;
                             break;
-                        }
-                        flag |= t;
+                        } else flag |= t;
                     }
-                    switch (flag & (MASK_MAIN_MENU | MASK_LEVEL1_ITEMS | MASK_LEVEL2_ITEMS)) {
-                        case FLAG_ARRAY3D_SORT1:
+                    if (!(flag & MASK_LEVEL3_ITEMS)) {
+                        unsigned int t = selectFillMenu();
+                        if (t == FLAG_EXIT) {
+                            flag &= (MASK_MAIN_MENU | MASK_LEVEL1_ITEMS);
                             break;
-                        case FLAG_ARRAY3D_SORT2:
+                        } else flag |= t;
+                    }
+                    unsigned int t = flag & MASK_LEVEL1_ITEMS;
+                    switch (flag & MASK_LEVEL3_ITEMS) {
+                        case FLAG_ORDER1:
+                            switch (t) {
+                                case FLAG_VECTOR_SORT:
+                                    // Select1_Vector()
+                                    break;
+                                case FLAG_ARRAY3D_SORT:
+                                    // Select1_Arr3D()
+                                    break;
+                                default:
+                                    break;
+                            }
                             break;
-                        case FLAG_ARRAY3D_SORT3:
+                        case FLAG_ORDER2:
+                            switch (t) {
+                                case FLAG_VECTOR_SORT:
+                                    // Select1_Vector()
+                                    break;
+                                case FLAG_ARRAY3D_SORT:
+                                    // Select1_Arr3D()
+                                    break;
+                                default:
+                                    break;
+                            }
+                            break;
+                        case FLAG_ORDER3:
+                            switch (t) {
+                                case FLAG_VECTOR_SORT:
+                                    // Select1_Vector()
+                                    break;
+                                case FLAG_ARRAY3D_SORT:
+                                    // Select1_Arr3D()
+                                    break;
+                                default:
+                                    break;
+                            }
                             break;
                         default:
                             break;
@@ -234,7 +227,8 @@ unsigned int menu(unsigned int flag) {
                         case 0:
                             flag = FLAG_MAIN_MENU;
                             break;
-                        default: break;
+                        default:
+                            break;
                     }
                     break;
                 default:
