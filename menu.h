@@ -1,29 +1,6 @@
-//
-// Created by leshik on 29.03.19.
-//
-
 #ifndef COURSE_WORK_MENU_H
 #define COURSE_WORK_MENU_H
 
-#define MASK_MAIN_MENU              0b0000000000000001
-#define MASK_LEVEL1_ITEMS           0b0000000000001110
-#define MASK_LEVEL2_ITEMS           0b0000000000110000
-#define MASK_LEVEL3_ITEMS           0b0000000011000000
-
-#define FLAG_MAIN_MENU              0b0000000000000001
-#define FLAG_VECTOR_MEASUREMENT     0b0000000000000010
-#define FLAG_ARRAY3D_MEASUREMENT    0b0000000000000100
-#define FLAG_VECTOR_SORT            0b0000000000000110
-#define FLAG_ARRAY3D_SORT           0b0000000000001000
-#define FLAG_HELP                   0b0000000000001010
-#define FLAG_SORT1                  0b0000000000010000
-#define FLAG_SORT2                  0b0000000000100000
-#define FLAG_SORT3                  0b0000000000110000
-#define FLAG_ORDER1                 0b0000000001000000
-#define FLAG_ORDER2                 0b0000000010000000
-#define FLAG_ORDER3                 0b0000000011000000
-#define FLAG_EXIT                   0b1111111111111111
-
-unsigned int menu(unsigned int flag);
+void menu();
 
 #endif //COURSE_WORK_MENU_H

@@ -1,3 +1,5 @@
+#include <malloc.h>
+#include <stdlib.h>
 #include "Common.h"
 
 int N = 10;
@@ -6,15 +8,15 @@ int M = 10;
 int *vector;
 int ***Arr3D;
 
-void Vector() {
+void initVector() {
     vector = (int *) malloc(N * sizeof(int *));
 }
 
-void FreeVector() {
+void freeVector() {
     free(vector);
 }
 
-void FillVector(int b) {
+void fillVector(int b) {
     switch (b) {
         case 1: {
             for (int i = 0; i < N; i++) {
@@ -43,7 +45,7 @@ void FillVector(int b) {
 }
 
 
-void Array3D() {
+void initArray3D() {
 
     Arr3D = (int ***) malloc(P * sizeof(int **));
     for (int k = 0; k < P; k++) {
@@ -53,7 +55,7 @@ void Array3D() {
     }
 }
 
-void FreeArray3D() {
+void freeArray3D() {
 
     for (int k = 0; k < P; k++) {
         for (int i = 0; i < M; i++)
@@ -64,44 +66,64 @@ void FreeArray3D() {
 
 }
 
-void FillArray3D(int b) {
+void fillArray3D(int b) {
     switch (b) {
         case 1: {
-            int number = 0;
-            for (int k = 0; k < P; k++) {
-                for (int j = 0; j < N; j++) {
-                    for (int i = 0; i < M; i++) {
-                        Arr3D[k][i][j] = number++;
-                    }
-                }
-            }
+            int it = 0;
+            for (int k = 0; k < P; k++)
+                for (int j = 0; j < N; j++)
+                    for (int i = 0; i < M; i++)
+                        Arr3D[k][i][j] = it++;
             break;
         }
         case 2: {
-            int number = M * N * P + 1;
-            for (int k = 0; k < P; k++) {
-                for (int j = 0; j < N; j++) {
-                    for (int i = 0; i < M; i++) {
-                        Arr3D[k][i][j] = number--;
-                    }
-                }
-            }
+            int it = M * N * P + 1;
+            for (int k = 0; k < P; k++)
+                for (int j = 0; j < N; j++)
+                    for (int i = 0; i < M; i++)
+                        Arr3D[k][i][j] = it--;
             break;
         }
 
-        case 3: {
-            for (int k = 0; k < P; k++) {
-                for (int j = 0; j < N; j++) {
-                    for (int i = 0; i < M; i++) {
+        case 3:
+            for (int k = 0; k < P; k++)
+                for (int j = 0; j < N; j++)
+                    for (int i = 0; i < M; i++)
                         Arr3D[k][i][j] = rand() % 30;
-                    }
-                }
-            }
             break;
-        }
 
         default:
             break;
 
     }
+}
+
+void printVector() {
+    printf("[ ");
+    for(int i = 0; i < N - 1; i++) printf("%d, ", vector[i]);
+        printf("%d ]\n", vector[N - 1]);
+}
+
+void printArray3D() {
+    printf("[\n\t[\n\t\t[ ");
+    for(int k = 0; k < P - 1; k++) {
+        for(int i = 0; i < M - 1; i++) {
+            for(int j = 0; j < N - 1; j++) {
+                printf("%d, ", Arr3D[k][i][j]);
+            }
+            printf("%d ],\n\t\t[ ", Arr3D[k][i][N - 1]);
+        }
+        for(int j = 0; j < N - 1; j++)
+            printf("%d, ", Arr3D[k][j][N - 1]);
+        printf("%d ]\n\t],\n\t\t[ ", Arr3D[k][M - 1][N - 1]);
+    }
+    for(int i = 0; i < M - 1; i++) {
+         for(int j = 0; j < N - 1; j++) {
+                printf("%d, ", Arr3D[P - 1][i][j]);
+            }
+            printf("%d ],\n\t\t[ ", Arr3D[P - 1][i][N - 1]);
+    }
+    for(int j = 0; j < N - 1; j++)
+            printf("%d, ", Arr3D[P - 1][j][N - 1]);
+        printf("%d ]\n\t]\n", Arr3D[P - 1][M - 1][N - 1]);
 }

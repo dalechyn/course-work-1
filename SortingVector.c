@@ -1,10 +1,9 @@
-//
-// Created by leshik on 24.03.19.
-//
-
+#include <time.h>
+#include <math.h>
+#include "Common.h"
 #include "SortingVector.h"
 
-clock_t Exchange3() {
+clock_t sortVectorExchange3() {
     int R, k, tmp;
     clock_t time_start, time_stop;
     time_start = clock();
@@ -24,7 +23,7 @@ clock_t Exchange3() {
     return time_stop - time_start;
 }
 
-clock_t Select1_Vector() {
+clock_t sortVectorSelect1() {
     int Min, imin;
     clock_t time_start, time_stop;
     time_start = clock();
@@ -43,7 +42,7 @@ clock_t Select1_Vector() {
     return time_stop - time_start;
 }
 
-clock_t Select3_Vector() {
+clock_t sortVectorSelect3() {
     int Min, Max;
     int L, R, imin, imax;
     clock_t time_start, time_stop;

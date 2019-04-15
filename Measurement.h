@@ -1,16 +1,5 @@
-//
-// Created by leshik on 25.03.19.
-//
-
 #ifndef COURSE_WORK_MEASUREMENT_H
 #define COURSE_WORK_MEASUREMENT_H
-
-#include <time.h>
-#include <stdio.h>
-#include "Common.h"
-#include "SortingVector.h"
-#include "SortingArray3D.h"
-
 
 #define measurements_number 28
 #define rejected_number 2

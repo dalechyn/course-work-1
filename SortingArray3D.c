@@ -1,10 +1,9 @@
-//
-// Created by leshik on 26.03.19.
-//
-
+#include <time.h>
+#include <math.h>
+#include "Common.h"
 #include "SortingArray3D.h"
 
-clock_t Select1_Arr3D() {
+clock_t sortArr3DSelect1() {
     clock_t time_start, time_stop;
     time_start = clock();
     int Min, imin;
@@ -25,7 +24,7 @@ clock_t Select1_Arr3D() {
     return time_stop - time_start;
 }
 
-clock_t Select3_Arr3D() {
+clock_t sortArr3DSelect3() {
         int Min, Max;
     int L, R, imin, imax;
     clock_t time_start, time_stop;
@@ -59,7 +58,7 @@ clock_t Select3_Arr3D() {
     return time_stop - time_start;
 }
 
-clock_t Select4_Arr3D(){
+clock_t sortArr3DExchange3(){ //NOT CORRECT
     int L, R, imin, imax, tmp;
     clock_t time_start, time_stop;
 

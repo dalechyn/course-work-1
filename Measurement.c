@@ -1,3 +1,8 @@
+#include <time.h>
+#include <stdio.h>
+#include "Common.h"
+#include "SortingVector.h"
+#include "SortingArray3D.h"
 #include "Measurement.h"
 
 clock_t Res[measurements_number];
@@ -41,43 +46,43 @@ float MeasurementProcessing() {
 
 void Select1_Vector_Measurement(int x) {
     for (int i = 0; i < measurements_number; i++) {
-        FillVector(x);
-        Res[i] = Select1_Vector();
+        fillVector(x);
+        Res[i] = sortVectorSelect1();
     }
 }
 
 void Select3_Vector_Measurement(int x) {
     for (int i = 0; i < measurements_number; i++) {
-        FillVector(x);
-        Res[i] = Select3_Vector();
+        fillVector(x);
+        Res[i] = sortVectorSelect3();
     }
 }
 
 void Exchange3_Vector_Measurement(int x) {
     for (int i = 0; i < measurements_number; i++) {
-        FillVector(x);
- //       Res[i] = Exchange3_Vector();
+        fillVector(x);
+ //       Res[i] = sortVectorExchange3();
     }
 }
 
 
 void Select1_Array3D_Measurement(int x) {
     for (int i = 0; i < measurements_number; i++) {
-        FillArray3D(x);
-        Res[i] = Select1_Arr3D();
+        fillArray3D(x);
+        Res[i] = sortArr3DSelect1();
     }
 }
 
 void Select3_Array3D_Measurement(int x) {
     for (int i = 0; i < measurements_number; i++) {
-        FillArray3D(x);
-        Res[i] = Select3_Arr3D();
+        fillArray3D(x);
+        Res[i] = sortArr3DSelect3();
     }
 }
 
 void Exchange3_Array3D_Measurement(int x) {
     for (int i = 0; i < measurements_number; i++) {
-        FillArray3D(x);
- //       Res[i] = Exchange3_Arr3D();
+        fillArray3D(x);
+ //       Res[i] = sortArr3DExchange3();
     }
 }

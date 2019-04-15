@@ -1,26 +1,163 @@
-#include "stdio.h"
+#include <stdio.h>
 #include "menu.h"
 #include "SortingArray3D.h"
 #include "SortingVector.h"
-
-typedef struct {
-    char *text;
-    unsigned int flag;
-} flagItem;
+#include "Common.h"
 
 void clear() {
-    printf("\033c");
+    printf("\033[H\033[J");
 }
 
-void printExit(char *text) {
+void printExit(const char *text) {
     printf("0. %s\n", text);
     printf("\nChoose: ");
 }
 
-unsigned int startMenu() {
-    int res = 0;
+void printErr() {
+    printf("\nWrong input. Please print correct menu number\n");
+    printf("\nChoose: ");
+}
+
+int selectOrder(int isVector, int sort) {
+    int res;
+    const int menuLength = 4;
+    const char menu[4][23] = {
+            "Exit to Sort Menu",
+            "Ordered vector",
+            "Reverse-ordered vector",
+            "Randomized vector",
+    };
+
+    for (int i = 1; i < menuLength; i++)
+        printf("%d. %s\n", i, menu[i]);
+
+    printExit("Exit to Main Menu");
+
+    scanf("%d", &res);
+    while (res < 0 || res > 4) {
+        printErr();
+        scanf("%d", &res);
+    }
+
+    clear();
+    if(isVector) {
+        initVector();
+        fillVector(res);
+        printf("Vector before sorting:\n");
+        printVector();
+        switch (sort) {
+            case 1:
+                sortVectorSelect1();
+            case 2:
+                sortVectorSelect3();
+            case 3:
+                sortVectorExchange3();
+            default:
+                break;
+        }
+        printf("Vector after sorting:\n");
+        printVector();
+        freeVector();
+    } else {
+        initArray3D();
+        fillArray3D(res);
+        printf("Array3D before sorting:\n");
+        printArray3D();
+        switch (sort) {
+            case 1:
+                sortArr3DSelect1();
+            case 2:
+                sortArr3DSelect3();
+            case 3:
+                sortArr3DExchange3();
+            default: break;
+        }
+        printf("Array3D after sorting:\n");
+        printArray3D();
+        freeArray3D();
+    }
+    printExit("Exit to Order menu");
+    while (res != 0) {
+        printErr();
+        scanf("%d", &res);
+    }
+    return res;
+}
+
+int selectSort(int isVector) {
+    int res;
+    const int menuLength = 4;
+    const char menu[4][20] = {
+            "Exit to Main Menu",
+            "Select1 algorithm",
+            "Select3 algorithm",
+            "Exchange3 algorithm",
+    };
+
+    for (int i = 1; i < menuLength; i++)
+        printf("%d. %s\n", i, menu[i]);
+
+    printExit(menu[0]);
+
+    scanf("%d", &res);
+    while (res < 0 || res > 4) {
+        printErr();
+        scanf("%d", &res);
+    }
+
+    clear();
+    if(res != 0) while(selectOrder(isVector, res));
+    return res;
+}
+
+
+int vectorMeasurement() {
+    return 0;
+}
+
+int array3DMeasurement() {
+    return 0;
+}
+
+int mainMenu() {
+    int res;
+    const int menuLength = 6;
+    const char menu[6][28] = {
+            "Exit",
+            "Vector Sorting Measurement",
+            "Array3D Sorting Measurement",
+            "Vector Sorting Test",
+            "Array3D Sorting Test",
+            "Help",
+    };
+
+    for (int i = 1; i < menuLength; i++)
+        printf("%d. %s\n", i, menu[i]);
+
+    printExit(menu[0]);
+
+    scanf("%d", &res);
+    while (res < 0 || res > 6) {
+        printErr();
+        scanf("%d", &res);
+    }
+
+    clear();
+    switch (res) {
+        case 1: while(vectorMeasurement()); break;
+        case 2: while(array3DMeasurement()); break;
+        case 3: while(selectSort(1)); break;
+        case 4: while(selectSort(0)); break;
+        default: break;
+    }
+
+    return res;
+}
+
+int startMenu() {
+    int res;
     const int labelsLength = 5;
-    const char labels[5][18] = {
+    const char labels[5][19] = {
             "Course Work SDA",
             "Written by",
             "Vladislav Dalechyn",
@@ -28,215 +165,29 @@ unsigned int startMenu() {
             "KPI 2018-2019"
     };
     const int menuLength = 2;
-    const flagItem menu[2] = {
-            {"Exit",     FLAG_EXIT},
-            {"Continue", FLAG_MAIN_MENU}
+    const char menu[2][9] = {
+            "Exit",
+            "Continue"
     };
 
     for (int i = 0; i < labelsLength; i++)
         printf("%s\n", labels[i]);
     for (int i = 1; i < menuLength; i++)
-        printf("%d. %s\n", i, menu[i].text);
-
-    printExit("Exit program");
+        printf("%d. %s\n", i, menu[i]);
+    printExit(menu[0]);
 
     scanf("%d", &res);
     while (res != 1 && res != 0) {
-        printf("\nWrong input. Please print 1 to continue\n");
+        printErr();
         scanf("%d", &res);
     }
 
     clear();
-
-    return menu[res].flag;
-}
-
-unsigned int mainMenu() {
-    int res;
-    const int menuLength = 6;
-    const flagItem menu[6] = {
-            {"Exit",                        FLAG_EXIT},
-            {"Vector Sorting Measurement",  FLAG_VECTOR_MEASUREMENT},
-            {"Array3D Sorting Measurement", FLAG_ARRAY3D_MEASUREMENT},
-            {"Vector Sorting Test",         FLAG_VECTOR_SORT},
-            {"Array3D Sorting Test",        FLAG_ARRAY3D_SORT},
-            {"Help",                        FLAG_HELP},
-    };
-
-    for (int i = 1; i < menuLength; i++)
-        printf("%d. %s\n", i, menu[i].text);
-
-    printExit(menu[0].text);
-
-    scanf("%d", &res);
-    while (res < 0 || res > 6) {
-        printf("\nWrong input. Please print correct menu number\n");
-        scanf("%d", &res);
-    }
-
-    clear();
-
-    return menu[res].flag;
-}
-
-unsigned int selectFillMenu() {
-    int res;
-    const int menuLength = 3;
-    const flagItem menu[4] = {
-            {"Exit to Sort Menu",      FLAG_EXIT},
-            {"Ordered vector",         FLAG_ORDER1},
-            {"Reverse-ordered vector", FLAG_ORDER2},
-            {"Randomized vector",      FLAG_ORDER3},
-    };
-
-    for (int i = 1; i < menuLength; i++)
-        printf("%d. %s\n", i, menu[i].text);
-
-    printExit("Exit to Main Menu");
-
-    scanf("%d", &res);
-    while (res < 0 || res > 4) {
-        printf("\nWrong input. Please print correct menu number\n");
-        scanf("%d", &res);
-    }
-
-    clear();
-
-    return menu[res].flag;
-}
-
-unsigned int selectSortMenu() {
-    int res;
-    const int menuLength = 4;
-    const flagItem menu[4] = {
-            {"Exit to Main Menu",   FLAG_EXIT},
-            {"Select1 algorithm",   FLAG_SORT1},
-            {"Select3 algorithm",   FLAG_SORT2},
-            {"Exchange3 algorithm", FLAG_SORT3}
-    };
-
-    for (int i = 1; i < menuLength; i++)
-        printf("%d. %s\n", i, menu[i].text);
-
-    printExit(menu[0].text);
-
-    scanf("%d", &res);
-    while (res < 0 || res > 4) {
-        printf("\nWrong input. Please print correct menu number\n");
-        scanf("%d", &res);
-    }
-
-    clear();
-
-    return menu[res].flag;
-}
-
-int helpMenu() {
-    int res;
-    printf("Author: Vladislav Dalechyn\n");
-
-    printExit("Exit to Main Menu");
-
-    scanf("%d", &res);
-    while (res != 0) {
-        printf("\nWrong input. Please print correct menu number\n");
-        scanf("%d", &res);
-    }
-
-    clear();
+    if(res == 1) while(mainMenu());
 
     return res;
 }
 
-unsigned int menu(unsigned int flag) {
-    clear();
-    if (!(flag & FLAG_MAIN_MENU)) {
-        flag |= startMenu();
-    }
-    switch (flag & MASK_MAIN_MENU) {
-        case FLAG_MAIN_MENU:
-            if (!(flag & MASK_LEVEL1_ITEMS)) {
-                unsigned int t = mainMenu();
-                flag = t == FLAG_EXIT ? FLAG_EXIT : flag | t;
-            }
-            switch (flag & MASK_LEVEL1_ITEMS) {
-                case FLAG_VECTOR_MEASUREMENT:
-                    break;
-                case FLAG_ARRAY3D_MEASUREMENT:
-                    break;
-                case FLAG_VECTOR_SORT:
-                case FLAG_ARRAY3D_SORT:
-                    if (!(flag & MASK_LEVEL2_ITEMS)) {
-                        unsigned int t = selectSortMenu();
-                        if (t == FLAG_EXIT) {
-                            flag &= MASK_MAIN_MENU;
-                            break;
-                        } else flag |= t;
-                    }
-                    if (!(flag & MASK_LEVEL3_ITEMS)) {
-                        unsigned int t = selectFillMenu();
-                        if (t == FLAG_EXIT) {
-                            flag &= (MASK_MAIN_MENU | MASK_LEVEL1_ITEMS);
-                            break;
-                        } else flag |= t;
-                    }
-                    unsigned int t = flag & MASK_LEVEL1_ITEMS;
-                    switch (flag & MASK_LEVEL3_ITEMS) {
-                        case FLAG_ORDER1:
-                            switch (t) {
-                                case FLAG_VECTOR_SORT:
-                                    // Select1_Vector()
-                                    break;
-                                case FLAG_ARRAY3D_SORT:
-                                    // Select1_Arr3D()
-                                    break;
-                                default:
-                                    break;
-                            }
-                            break;
-                        case FLAG_ORDER2:
-                            switch (t) {
-                                case FLAG_VECTOR_SORT:
-                                    // Select1_Vector()
-                                    break;
-                                case FLAG_ARRAY3D_SORT:
-                                    // Select1_Arr3D()
-                                    break;
-                                default:
-                                    break;
-                            }
-                            break;
-                        case FLAG_ORDER3:
-                            switch (t) {
-                                case FLAG_VECTOR_SORT:
-                                    // Select1_Vector()
-                                    break;
-                                case FLAG_ARRAY3D_SORT:
-                                    // Select1_Arr3D()
-                                    break;
-                                default:
-                                    break;
-                            }
-                            break;
-                        default:
-                            break;
-                    }
-                    break;
-                case FLAG_HELP:
-                    switch (helpMenu()) {
-                        case 0:
-                            flag = FLAG_MAIN_MENU;
-                            break;
-                        default:
-                            break;
-                    }
-                    break;
-                default:
-                    break;
-            }
-            break;
-        default:
-            break;
-    }
-    return flag;
+void menu() {
+    while(startMenu());
 }
