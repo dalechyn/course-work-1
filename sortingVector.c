@@ -1,6 +1,6 @@
 #include <math.h>
-#include "Common.h"
-#include "SortingVector.h"
+#include "common.h"
+#include "sortingVector.h"
 
 clock_t sortVectorExchange3() {
     int R, k, tmp;

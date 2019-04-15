@@ -1,9 +1,9 @@
 #include <time.h>
 #include <stdio.h>
-#include "Common.h"
+#include "common.h"
 #include "sortingVector.h"
 #include "sortingArray3D.h"
-#include "Measurement.h"
+#include "measurement.h"
 
 clock_t Res[measurements_number];
 

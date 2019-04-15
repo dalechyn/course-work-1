@@ -1,6 +1,6 @@
 #include <math.h>
-#include "Common.h"
-#include "SortingArray3D.h"
+#include "common.h"
+#include "sortingArray3D.h"
 
 clock_t sortArr3DSelect1() {
     int swapped, Elem;

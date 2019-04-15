@@ -1,9 +1,9 @@
 #include <stdio.h>
+#include "common.h"
+#include "measurement.h"
+#include "sortingVector.h"
+#include "sortingArray3D.h"
 #include "menu.h"
-#include "SortingArray3D.h"
-#include "SortingVector.h"
-#include "Common.h"
-#include "Measurement.h"
 
 void clear() {
     printf("\033[H\033[J");
