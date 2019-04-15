@@ -1,11 +1,11 @@
 #ifndef COURSE_WORK_COMMON_H
 #define COURSE_WORK_COMMON_H
 
-extern int *vector;
-extern int ***Arr3D;
-extern int P;//перерізи
-extern int M;//рядки
-extern int N;//стовбці
+extern int * Vector;
+extern int *** Arr3D;
+extern int P;
+extern int M;
+extern int N;
 
 void initVector();
 void fillVector(int b);

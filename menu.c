@@ -3,6 +3,7 @@
 #include "SortingArray3D.h"
 #include "SortingVector.h"
 #include "Common.h"
+#include "Measurement.h"
 
 void clear() {
     printf("\033[H\033[J");
@@ -23,9 +24,9 @@ int selectOrder(int isVector, int sort) {
     const int menuLength = 4;
     const char menu[4][23] = {
             "Exit to Sort Menu",
-            "Ordered vector",
-            "Reverse-ordered vector",
-            "Randomized vector",
+            "Ordered Vector",
+            "Reverse-ordered Vector",
+            "Randomized Vector",
     };
 
     for (int i = 1; i < menuLength; i++)
@@ -111,13 +112,41 @@ int selectSort(int isVector) {
     return res;
 }
 
+int Measurement(int isVector) {
+    int res;
+    measurement_t m;
 
-int vectorMeasurement() {
-    return 0;
-}
+    if(isVector) {
+        printf("N = ");
+        scanf("%d", &N);
+        printf("\n");
+    } else {
+        printf("P = ");
+        scanf("%d", &P);
+        printf("\nN = ");
+        scanf("%d", &N);
+        printf("\nM = ");
+        scanf("%d", &M);
+    }
 
-int array3DMeasurement() {
-    return 0;
+    clear();
+
+    printf("%-20s%-19s%-18s%-20s\n", "", "|Ordered|", "|Reversed|", "|Randomized|");
+    m = measure(isVector, measurementSelect1);
+    printf("%-9s%20f%20f%20f\n", "Select1", m.ordered, m.reversed, m.randomized);
+    m = measure(isVector, measurementSelect3);
+    printf("%-9s%20f%20f%20f\n", "Select3", m.ordered, m.reversed, m.randomized);
+    m = measure(isVector, measurementExchange3);
+    printf("%-9s%20f%20f%20f\n", "Exchange3", m.ordered, m.reversed, m.randomized);
+
+    printExit("Exit to Main Menu");
+    scanf("%d", &res);
+    while (res != 0) {
+        printErr();
+        scanf("%d", &res);
+    }
+    clear();
+    return res;
 }
 
 int mainMenu() {
@@ -145,10 +174,10 @@ int mainMenu() {
     clear();
     switch (res) {
         case 1:
-            while (vectorMeasurement());
+            while (Measurement(1));
             break;
         case 2:
-            while (array3DMeasurement());
+            while (Measurement(0));
             break;
         case 3:
             while (selectSort(1));
@@ -198,5 +227,6 @@ int startMenu() {
 }
 
 void menu() {
+    clear();
     while (startMenu());
 }

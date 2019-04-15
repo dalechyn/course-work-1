@@ -44,45 +44,67 @@ float MeasurementProcessing() {
     return AverageValue;
 }
 
-void Select1_Vector_Measurement(int x) {
-    for (int i = 0; i < measurements_number; i++) {
+measurement_t measure(int isVector, void (*cb)(int, int)) {
+    measurement_t res = {0.f, 0.f, 0.f};
+    if(isVector) {
+        initVector();
+
+        cb(1, isVector);
+        res.ordered = MeasurementProcessing();
+
+        cb(2, isVector);
+        res.reversed = MeasurementProcessing();
+
+        cb(3, isVector);
+
+        res.randomized = MeasurementProcessing();
+
+        freeVector();
+    } else {
+        initArray3D();
+        initVector(); //TODO: DELETE
+
+        cb(1, isVector);
+        res.ordered = MeasurementProcessing();
+
+        cb(2, isVector);
+        res.reversed = MeasurementProcessing();
+
+        cb(3, isVector);
+        res.randomized = MeasurementProcessing();
+
+        freeArray3D();
+        freeVector(); //TODO: DELETE
+    }
+    return res;
+}
+
+void measurementSelect1(int x, int isVector) {
+    if(isVector) for (int i = 0; i < measurements_number; i++) {
         fillVector(x);
         Res[i] = sortVectorSelect1();
-    }
-}
-
-void Select3_Vector_Measurement(int x) {
-    for (int i = 0; i < measurements_number; i++) {
-        fillVector(x);
-        Res[i] = sortVectorSelect3();
-    }
-}
-
-void Exchange3_Vector_Measurement(int x) {
-    for (int i = 0; i < measurements_number; i++) {
-        fillVector(x);
- //       Res[i] = sortVectorExchange3();
-    }
-}
-
-
-void Select1_Array3D_Measurement(int x) {
-    for (int i = 0; i < measurements_number; i++) {
+    } else for(int i = 0; i < measurements_number; i++) {
         fillArray3D(x);
         Res[i] = sortArr3DSelect1();
     }
 }
 
-void Select3_Array3D_Measurement(int x) {
-    for (int i = 0; i < measurements_number; i++) {
+void measurementSelect3(int x, int isVector) {
+    if(isVector) for (int i = 0; i < measurements_number; i++) {
+        fillVector(x);
+        Res[i] = sortVectorSelect3();
+    } else for(int i = 0; i < measurements_number; i++) {
         fillArray3D(x);
         Res[i] = sortArr3DSelect3();
     }
 }
 
-void Exchange3_Array3D_Measurement(int x) {
-    for (int i = 0; i < measurements_number; i++) {
+void measurementExchange3(int x, int isVector) {
+    if(isVector) for (int i = 0; i < measurements_number; i++) {
+        fillVector(x);
+        Res[i] = sortVectorExchange3();
+    } else for(int i = 0; i < measurements_number; i++) {
         fillArray3D(x);
- //       Res[i] = sortArr3DExchange3();
+        Res[i] = sortArr3DExchange3();
     }
 }

@@ -7,12 +7,16 @@
 
 extern clock_t Res[measurements_number];
 
+typedef struct {
+    float ordered;
+    float reversed;
+    float randomized;
+} measurement_t;
+
 float MeasurementProcessing();
-void Select1_Vector_Measurement(int x);
-void Select3_Vector_Measurement(int x);
-void Exchange3_Vector_Measurement(int x);
-void Select1_Array3D_Measurement(int x);
-void Select3_Array3D_Measurement(int x);
-void Exchange3_Array3D_Measurement(int x);
+measurement_t measure(int isVector, void (*cb)(int, int));
+void measurementSelect1(int x, int isVector);
+void measurementSelect3(int x, int isVector);
+void measurementExchange3(int x, int isVector);
 
 #endif //COURSE_WORK_MEASUREMENT_H

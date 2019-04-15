@@ -10,10 +10,10 @@ clock_t sortVectorExchange3() {
     while (R > 0) {
         k = 0;
         for (int i = 0; i < R; i++)
-            if (vector[i] > vector[i + 1]) {
-                tmp = vector[i];
-                vector[i] = vector[i + 1];
-                vector[i + 1] = tmp;
+            if (Vector[i] > Vector[i + 1]) {
+                tmp = Vector[i];
+                Vector[i] = Vector[i + 1];
+                Vector[i + 1] = tmp;
                 k = i;
             }
         R = k;
@@ -27,15 +27,15 @@ clock_t sortVectorSelect1() {
     clock_t time_start, time_stop;
     time_start = clock();
     for (int s = 0; s < N - 1; s++) {
-        Min = vector[s];
+        Min = Vector[s];
         imin = s;
         for (int i = s + 1; i < N; i++)
-            if (vector[i] < Min) {
-                Min = vector[i];
+            if (Vector[i] < Min) {
+                Min = Vector[i];
                 imin = i;
             }
-        vector[imin] = vector[s];
-        vector[s] = Min;
+        Vector[imin] = Vector[s];
+        Vector[s] = Min;
     }
     time_stop = clock();
     return time_stop - time_start;
@@ -49,25 +49,25 @@ clock_t sortVectorSelect3() {
     L = 0;
     R = N - 1;
     while (L < R) {
-        Min = vector[L];
+        Min = Vector[L];
         imin = L;
-        Max = vector[L];
+        Max = Vector[L];
         imax = L;
         for (int i = L + 1; i < R + 1; i++) {
-            if (vector[i] < Min) {
-                Min = vector[i];
+            if (Vector[i] < Min) {
+                Min = Vector[i];
                 imin = i;
-            } else if (vector[i] > Max) {
-                Max = vector[i];
+            } else if (Vector[i] > Max) {
+                Max = Vector[i];
                 imax = i;
             }
         }
-        vector[imin] = vector[L];
-        vector[L] = Min;
-        if (imax == L) vector[imin] = vector[R];
+        Vector[imin] = Vector[L];
+        Vector[L] = Min;
+        if (imax == L) Vector[imin] = Vector[R];
         else
-            vector[imax] = vector[R];
-        vector[R] = Max;
+            Vector[imax] = Vector[R];
+        Vector[R] = Max;
         L = L + 1;
         R = R - 1;
     }

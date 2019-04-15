@@ -1,39 +1,41 @@
 #include <malloc.h>
 #include <stdlib.h>
+#include <time.h>
 #include "Common.h"
 
 int N = 10;
 int P = 3;
 int M = 10;
-int *vector;
-int ***Arr3D;
+int * Vector;
+int *** Arr3D;
 
 void initVector() {
-    vector = (int *) malloc(N * sizeof(int *));
+    Vector = (int *) malloc(N * sizeof(int *));
 }
 
 void freeVector() {
-    free(vector);
+    free(Vector);
 }
 
 void fillVector(int b) {
     switch (b) {
         case 1: {
             for (int i = 0; i < N; i++) {
-                vector[i] = i;
+                Vector[i] = i;
             }
             break;
         }
         case 2: {
             for (int i = 0; i < N; i++) {
-                vector[i] = N - i;
+                Vector[i] = N - i;
             }
             break;
         }
 
         case 3: {
+            srand((unsigned int) time(NULL));
             for (int i = 0; i < N; i++) {
-                vector[i] = rand() % 10;
+                Vector[i] = rand() % 10;
             }
             break;
         }
@@ -86,6 +88,7 @@ void fillArray3D(int b) {
         }
 
         case 3:
+            srand((unsigned int) time(NULL));
             for (int k = 0; k < P; k++)
                 for (int j = 0; j < N; j++)
                     for (int i = 0; i < M; i++)
@@ -100,8 +103,8 @@ void fillArray3D(int b) {
 
 void printVector() {
     printf("[ ");
-    for(int i = 0; i < N - 1; i++) printf("%d, ", vector[i]);
-        printf("%d ]\n", vector[N - 1]);
+    for(int i = 0; i < N - 1; i++) printf("%d, ", Vector[i]);
+        printf("%d ]\n\n", Vector[N - 1]);
 }
 
 void printArray3D() {
@@ -125,5 +128,5 @@ void printArray3D() {
     }
     for(int j = 0; j < N - 1; j++)
             printf("%d, ", Arr3D[P - 1][j][N - 1]);
-        printf("%d ]\n\t]\n", Arr3D[P - 1][M - 1][N - 1]);
+        printf("%d ]\n\t]\n]\n", Arr3D[P - 1][M - 1][N - 1]);
 }
