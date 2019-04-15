@@ -35,7 +35,7 @@ int selectOrder(int isVector, int sort) {
     printExit("Exit to Main Menu");
 
     scanf("%d", &res);
-    while (res < 0 || res > 4) {
+    while (res < 0 || res > menuLength) {
         printErr();
         scanf("%d", &res);
     }
@@ -102,7 +102,7 @@ int selectSort(int isVector) {
 
     printExit(menu[0]);
     scanf("%d", &res);
-    while (res < 0 || res > 4) {
+    while (res < 0 || res > menuLength) {
         printErr();
         scanf("%d", &res);
     }
@@ -137,7 +137,7 @@ int Measurement(int isVector) {
     m = measure(isVector, measurementSelect3);
     printf("%-9s%20f%20f%20f\n", "Select3", m.ordered, m.reversed, m.randomized);
     m = measure(isVector, measurementExchange3);
-    printf("%-9s%20f%20f%20f\n", "Exchange3", m.ordered, m.reversed, m.randomized);
+    printf("%-9s%20f%20f%20f\n\n", "Exchange3", m.ordered, m.reversed, m.randomized);
 
     printExit("Exit to Main Menu");
     scanf("%d", &res);
@@ -151,14 +151,13 @@ int Measurement(int isVector) {
 
 int mainMenu() {
     int res;
-    const int menuLength = 6;
-    const char menu[6][28] = {
+    const int menuLength = 5;
+    const char menu[5][28] = {
             "Exit",
             "Vector Sorting Measurement",
             "Array3D Sorting Measurement",
             "Vector Sorting Test",
-            "Array3D Sorting Test",
-            "Help",
+            "Array3D Sorting Test"
     };
 
     for (int i = 1; i < menuLength; i++)
@@ -166,7 +165,7 @@ int mainMenu() {
 
     printExit(menu[0]);
     scanf("%d", &res);
-    while (res < 0 || res > 6) {
+    while (res < 0 || res > menuLength) {
         printErr();
         scanf("%d", &res);
     }
