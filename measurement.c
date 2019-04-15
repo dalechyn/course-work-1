@@ -44,67 +44,68 @@ float MeasurementProcessing() {
     return AverageValue;
 }
 
-measurement_t measure(int isVector, void (*cb)(int, int)) {
-    measurement_t res = {0.f, 0.f, 0.f};
-    if(isVector) {
-        initVector();
-
-        cb(1, isVector);
-        res.ordered = MeasurementProcessing();
-
-        cb(2, isVector);
-        res.reversed = MeasurementProcessing();
-
-        cb(3, isVector);
-
-        res.randomized = MeasurementProcessing();
-
-        freeVector();
-    } else {
-        initArray3D();
-        initVector(); //TODO: DELETE
-
-        cb(1, isVector);
-        res.ordered = MeasurementProcessing();
-
-        cb(2, isVector);
-        res.reversed = MeasurementProcessing();
-
-        cb(3, isVector);
-        res.randomized = MeasurementProcessing();
-
-        freeArray3D();
-        freeVector(); //TODO: DELETE
+measurement_s measure(int isVector, int sort) {
+    measurement_s res = {0.f, 0.f, 0.f};
+    if(isVector) initVector();
+    else initArray3D();
+    switch (sort) {
+        case 1:
+            measurementSelect1(1, isVector);
+            res.ordered = MeasurementProcessing();
+            measurementSelect1(2, isVector);
+            res.reversed = MeasurementProcessing();
+            measurementSelect1(3, isVector);
+            res.randomized = MeasurementProcessing();
+            break;
+        case 2:
+            measurementSelect3(1, isVector);
+            res.ordered = MeasurementProcessing();
+            measurementSelect3(2, isVector);
+            res.reversed = MeasurementProcessing();
+            measurementSelect3(3, isVector);
+            res.randomized = MeasurementProcessing();
+            break;
+        case 3:
+            measurementExchange3(1, isVector);
+            res.ordered = MeasurementProcessing();
+            measurementExchange3(2, isVector);
+            res.reversed = MeasurementProcessing();
+            measurementExchange3(3, isVector);
+            res.randomized = MeasurementProcessing();
+            break;
+        default: break;
     }
+    if(isVector) freeVector();
+    else freeArray3D();
     return res;
 }
 
-void measurementSelect1(int x, int isVector) {
+void measurementSelect1(int order, int isVector) {
     if(isVector) for (int i = 0; i < measurements_number; i++) {
-        fillVector(x);
+        fillVector(order);
         Res[i] = sortVectorSelect1();
     } else for(int i = 0; i < measurements_number; i++) {
-        fillArray3D(x);
+        fillArray3D(order);
         Res[i] = sortArr3DSelect1();
     }
 }
 
-void measurementSelect3(int x, int isVector) {
+void measurementSelect3(int order, int isVector) {
     if(isVector) for (int i = 0; i < measurements_number; i++) {
-        fillVector(x);
+        fillVector(order);
         Res[i] = sortVectorSelect3();
     } else for(int i = 0; i < measurements_number; i++) {
-        fillArray3D(x);
+        fillArray3D(order);
         Res[i] = sortArr3DSelect3();
     }
 }
 
-void measurementExchange3(int x, int isVector) {
+void measurementExchange3(int order, int isVector) {
     if(isVector) for (int i = 0; i < measurements_number; i++) {
-        fillVector(x);
+        fillVector(order);
         Res[i] = sortVectorExchange3();
     } else for(int i = 0; i < measurements_number; i++) {
-        fillArray3D(x);
+        fillArray3D(order);
         Res[i] = sortArr3DExchange3();
     }
 }

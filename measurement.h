@@ -5,18 +5,20 @@
 #define rejected_number 2
 #define min_max_number 3
 
+#include <time.h>
+
 extern clock_t Res[measurements_number];
 
 typedef struct {
     float ordered;
     float reversed;
     float randomized;
-} measurement_t;
+} measurement_s;
 
 float MeasurementProcessing();
-measurement_t measure(int isVector, void (*cb)(int, int));
-void measurementSelect1(int x, int isVector);
-void measurementSelect3(int x, int isVector);
-void measurementExchange3(int x, int isVector);
+measurement_s measure(int isVector, int sort);
+void measurementSelect1(int order, int isVector);
+void measurementSelect3(int order, int isVector);
+void measurementExchange3(int order, int isVector);
 
 #endif //COURSE_WORK_MEASUREMENT_H

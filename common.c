@@ -13,6 +13,15 @@ void initVector() {
     Vector = (int *) malloc(N * sizeof(int *));
 }
 
+void initArray3D() {
+    Arr3D = (int ***) malloc(P * sizeof(int **));
+    for (int k = 0; k < P; k++) {
+        Arr3D[k] = (int **) malloc(M * sizeof(int *));
+        for (int i = 0; i < M; i++)
+            Arr3D[k][i] = (int *) malloc(N * sizeof(int));
+    }
+}
+
 void freeVector() {
     free(Vector);
 }
@@ -43,17 +52,6 @@ void fillVector(int b) {
         default:
             break;
 
-    }
-}
-
-
-void initArray3D() {
-
-    Arr3D = (int ***) malloc(P * sizeof(int **));
-    for (int k = 0; k < P; k++) {
-        Arr3D[k] = (int **) malloc(M * sizeof(int *));
-        for (int i = 0; i < M; i++)
-            Arr3D[k][i] = (int *) malloc(N * sizeof(int));
     }
 }
 

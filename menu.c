@@ -19,7 +19,7 @@ void printErr() {
     printf("\nChoose: ");
 }
 
-int selectOrder(int isVector, int sort) {
+int orderMenu(int isVector, int sort) {
     int res;
     const int menuLength = 4;
     const char menu[4][23] = {
@@ -87,7 +87,7 @@ int selectOrder(int isVector, int sort) {
     return res;
 }
 
-int selectSort(int isVector) {
+int sortMenu(int isVector) {
     int res;
     const int menuLength = 4;
     const char menu[4][20] = {
@@ -108,13 +108,13 @@ int selectSort(int isVector) {
     }
 
     clear();
-    if (res != 0) while (selectOrder(isVector, res));
+    if (res != 0) while (orderMenu(isVector, res));
     return res;
 }
 
-int Measurement(int isVector) {
+int measurementMenu(int isVector) {
     int res;
-    measurement_t m;
+    measurement_s m;
 
     if(isVector) {
         printf("N = ");
@@ -132,11 +132,11 @@ int Measurement(int isVector) {
     clear();
 
     printf("%-20s%-19s%-18s%-20s\n", "", "|Ordered|", "|Reversed|", "|Randomized|");
-    m = measure(isVector, measurementSelect1);
+    m = measure(isVector, 1);
     printf("%-9s%20f%20f%20f\n", "Select1", m.ordered, m.reversed, m.randomized);
-    m = measure(isVector, measurementSelect3);
+    m = measure(isVector, 2);
     printf("%-9s%20f%20f%20f\n", "Select3", m.ordered, m.reversed, m.randomized);
-    m = measure(isVector, measurementExchange3);
+    m = measure(isVector, 3);
     printf("%-9s%20f%20f%20f\n\n", "Exchange3", m.ordered, m.reversed, m.randomized);
 
     printExit("Exit to Main Menu");
@@ -173,16 +173,16 @@ int mainMenu() {
     clear();
     switch (res) {
         case 1:
-            while (Measurement(1));
+            while (measurementMenu(1));
             break;
         case 2:
-            while (Measurement(0));
+            while (measurementMenu(0));
             break;
         case 3:
-            while (selectSort(1));
+            while (sortMenu(1));
             break;
         case 4:
-            while (selectSort(0));
+            while (sortMenu(0));
             break;
         default:
             break;
