@@ -1,4 +1,3 @@
-#include <time.h>
 #include <math.h>
 #include "Common.h"
 #include "SortingVector.h"

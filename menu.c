@@ -40,7 +40,7 @@ int selectOrder(int isVector, int sort) {
     }
 
     clear();
-    if(isVector) {
+    if (isVector) {
         initVector();
         fillVector(res);
         printf("Vector before sorting:\n");
@@ -70,13 +70,15 @@ int selectOrder(int isVector, int sort) {
                 sortArr3DSelect3();
             case 3:
                 sortArr3DExchange3();
-            default: break;
+            default:
+                break;
         }
         printf("Array3D after sorting:\n");
         printArray3D();
         freeArray3D();
     }
     printExit("Exit to Order menu");
+    scanf("%d", &res);
     while (res != 0) {
         printErr();
         scanf("%d", &res);
@@ -98,7 +100,6 @@ int selectSort(int isVector) {
         printf("%d. %s\n", i, menu[i]);
 
     printExit(menu[0]);
-
     scanf("%d", &res);
     while (res < 0 || res > 4) {
         printErr();
@@ -106,7 +107,7 @@ int selectSort(int isVector) {
     }
 
     clear();
-    if(res != 0) while(selectOrder(isVector, res));
+    if (res != 0) while (selectOrder(isVector, res));
     return res;
 }
 
@@ -135,7 +136,6 @@ int mainMenu() {
         printf("%d. %s\n", i, menu[i]);
 
     printExit(menu[0]);
-
     scanf("%d", &res);
     while (res < 0 || res > 6) {
         printErr();
@@ -144,11 +144,20 @@ int mainMenu() {
 
     clear();
     switch (res) {
-        case 1: while(vectorMeasurement()); break;
-        case 2: while(array3DMeasurement()); break;
-        case 3: while(selectSort(1)); break;
-        case 4: while(selectSort(0)); break;
-        default: break;
+        case 1:
+            while (vectorMeasurement());
+            break;
+        case 2:
+            while (array3DMeasurement());
+            break;
+        case 3:
+            while (selectSort(1));
+            break;
+        case 4:
+            while (selectSort(0));
+            break;
+        default:
+            break;
     }
 
     return res;
@@ -174,8 +183,8 @@ int startMenu() {
         printf("%s\n", labels[i]);
     for (int i = 1; i < menuLength; i++)
         printf("%d. %s\n", i, menu[i]);
-    printExit(menu[0]);
 
+    printExit(menu[0]);
     scanf("%d", &res);
     while (res != 1 && res != 0) {
         printErr();
@@ -183,11 +192,11 @@ int startMenu() {
     }
 
     clear();
-    if(res == 1) while(mainMenu());
+    if (res == 1) while (mainMenu());
 
     return res;
 }
 
 void menu() {
-    while(startMenu());
+    while (startMenu());
 }
