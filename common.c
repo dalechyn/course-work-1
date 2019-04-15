@@ -1,7 +1,7 @@
 #include <malloc.h>
 #include <stdlib.h>
 #include <time.h>
-#include "Common.h"
+#include "common.h"
 
 int N = 10;
 int P = 3;

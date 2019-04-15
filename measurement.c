@@ -1,8 +1,8 @@
 #include <time.h>
 #include <stdio.h>
 #include "Common.h"
-#include "SortingVector.h"
-#include "SortingArray3D.h"
+#include "sortingVector.h"
+#include "sortingArray3D.h"
 #include "Measurement.h"
 
 clock_t Res[measurements_number];
