@@ -8,11 +8,11 @@ extern int M;
 extern int N;
 
 void initVector();
-void fillVector(int b);
+void fillVector(int order);
 void freeVector();
 void initArray3D();
 void freeArray3D();
-void fillArray3D(int b);
+void fillArray3D(int order);
 void printVector();
 void printArray3D();
 

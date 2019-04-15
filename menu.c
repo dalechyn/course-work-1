@@ -35,7 +35,7 @@ int orderMenu(int isVector, int sort) {
     printExit("Exit to Main Menu");
 
     scanf("%d", &res);
-    while (res < 0 || res > menuLength) {
+    while (res < 0 || res > menuLength - 1) {
         printErr();
         scanf("%d", &res);
     }
@@ -84,6 +84,7 @@ int orderMenu(int isVector, int sort) {
         printErr();
         scanf("%d", &res);
     }
+    clear();
     return res;
 }
 
@@ -102,7 +103,7 @@ int sortMenu(int isVector) {
 
     printExit(menu[0]);
     scanf("%d", &res);
-    while (res < 0 || res > menuLength) {
+    while (res < 0 || res > menuLength - 1) {
         printErr();
         scanf("%d", &res);
     }
@@ -165,7 +166,7 @@ int mainMenu() {
 
     printExit(menu[0]);
     scanf("%d", &res);
-    while (res < 0 || res > menuLength) {
+    while (res < 0 || res > menuLength - 1) {
         printErr();
         scanf("%d", &res);
     }

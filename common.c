@@ -26,8 +26,19 @@ void freeVector() {
     free(Vector);
 }
 
-void fillVector(int b) {
-    switch (b) {
+void freeArray3D() {
+
+    for (int k = 0; k < P; k++) {
+        for (int i = 0; i < M; i++)
+            free(Arr3D[k][i]);
+        free(Arr3D[k]);
+    }
+    free(Arr3D);
+
+}
+
+void fillVector(int order) {
+    switch (order) {
         case 1: {
             for (int i = 0; i < N; i++) {
                 Vector[i] = i;
@@ -55,19 +66,8 @@ void fillVector(int b) {
     }
 }
 
-void freeArray3D() {
-
-    for (int k = 0; k < P; k++) {
-        for (int i = 0; i < M; i++)
-            free(Arr3D[k][i]);
-        free(Arr3D[k]);
-    }
-    free(Arr3D);
-
-}
-
-void fillArray3D(int b) {
-    switch (b) {
+void fillArray3D(int order) {
+    switch (order) {
         case 1: {
             int it = 0;
             for (int k = 0; k < P; k++)
