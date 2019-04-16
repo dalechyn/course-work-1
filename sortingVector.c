@@ -1,6 +1,12 @@
 #include <math.h>
 #include "common.h"
 #include "sortingVector.h"
+/*
+ * МОДУЛЬ sortingVector
+ *
+ * Всі функції описані в цьому модулі сортують вектор
+ * і повертають час його роботи
+ */
 
 clock_t sortVectorExchange3() {
     int R, k, tmp;

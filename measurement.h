@@ -9,13 +9,14 @@
 
 extern clock_t Res[measurements_number];
 
+// Структура, у якій будуть зберігатися результати вимірів
 typedef struct {
     float ordered;
     float reversed;
     float randomized;
 } measurement_s;
 
-float MeasurementProcessing();
+float measurementProcessing();
 measurement_s measure(int isVector, int sort);
 void measurementSelect1(int order, int isVector);
 void measurementSelect3(int order, int isVector);

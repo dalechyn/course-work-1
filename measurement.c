@@ -5,9 +5,13 @@
 #include "sortingArray3D.h"
 #include "measurement.h"
 
+/*
+ * МОДУЛЬ measurement
+ */
+
 clock_t Res[measurements_number];
 
-float MeasurementProcessing() {
+float measurementProcessing() {
     long int Sum;
     float AverageValue;
 
@@ -45,33 +49,42 @@ float MeasurementProcessing() {
 }
 
 measurement_s measure(int isVector, int sort) {
+    /*
+     * isVector показує робити операції з вектором, або масивом
+     * 1 - вектор, 0 - масив
+     *
+     * sort показує вибраний алгоритм сортування
+     * 1 — алогритм прямого вибору №1
+     * 2 — алгоритм прямого вибору №3
+     * 3 — алгоритм сортування №3 методу прямого обміну із запам’ятовуванням місця останньої перестановки
+     */
     measurement_s res = {0.f, 0.f, 0.f};
     if(isVector) initVector();
     else initArray3D();
     switch (sort) {
         case 1:
             measurementSelect1(1, isVector);
-            res.ordered = MeasurementProcessing();
+            res.ordered = measurementProcessing();
             measurementSelect1(2, isVector);
-            res.reversed = MeasurementProcessing();
+            res.reversed = measurementProcessing();
             measurementSelect1(3, isVector);
-            res.randomized = MeasurementProcessing();
+            res.randomized = measurementProcessing();
             break;
         case 2:
             measurementSelect3(1, isVector);
-            res.ordered = MeasurementProcessing();
+            res.ordered = measurementProcessing();
             measurementSelect3(2, isVector);
-            res.reversed = MeasurementProcessing();
+            res.reversed = measurementProcessing();
             measurementSelect3(3, isVector);
-            res.randomized = MeasurementProcessing();
+            res.randomized = measurementProcessing();
             break;
         case 3:
             measurementExchange3(1, isVector);
-            res.ordered = MeasurementProcessing();
+            res.ordered = measurementProcessing();
             measurementExchange3(2, isVector);
-            res.reversed = MeasurementProcessing();
+            res.reversed = measurementProcessing();
             measurementExchange3(3, isVector);
-            res.randomized = MeasurementProcessing();
+            res.randomized = measurementProcessing();
             break;
         default: break;
     }
@@ -79,6 +92,11 @@ measurement_s measure(int isVector, int sort) {
     else freeArray3D();
     return res;
 }
+
+/*
+ * Подальші алгоритми вимірують швидкість роботи алгоритмів
+ * і зберігають результати у Res
+ */
 
 void measurementSelect1(int order, int isVector) {
     if(isVector) for (int i = 0; i < measurements_number; i++) {

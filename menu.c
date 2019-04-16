@@ -5,21 +5,42 @@
 #include "sortingArray3D.h"
 #include "menu.h"
 
+/*
+ *  МОДУЛЬ menu:
+ *
+ *  Опис роботи функцій з закінченням *Menu(..)
+ *
+ *  Такі функції займаються прорисовкою окремого кадра меню
+ *
+ *  Повертаєме значення res є результатом вибору користувачем пункта меню.
+ *  При вибору користувачем будь-якого пункта меню окрім нульового (вихід),
+ *  запускається цикл прорисовки наступного меню, яке повертатиме результат
+ *  вибору наступного пункту меню.
+ *
+ */
+
 void clear() {
+    // Очищення екрану консолі
     printf("\033[H\033[J");
 }
 
 void printExit(const char *text) {
+    // Вивід на екран консолі кнопки виходу
     printf("0. %s\n", text);
     printf("\nChoose: ");
 }
 
 void printErr() {
+    // Вивід на екран консолі повідомлення про помилку вибору
     printf("\nWrong input. Please print correct menu number\n");
     printf("\nChoose: ");
 }
 
 int orderMenu(int isVector, int sort) {
+    /*
+        Виклик меню вибору порядку заповнення данних.
+        Точка запуску алгоритмів сортування.
+    */
     int res;
     const int menuLength = 4;
     const char menu[4][23] = {
@@ -89,6 +110,9 @@ int orderMenu(int isVector, int sort) {
 }
 
 int sortMenu(int isVector) {
+    /*
+        Точка запуску вимірювання алгоритмів сортування.
+    */
     int res;
     const int menuLength = 4;
     const char menu[4][20] = {
@@ -114,6 +138,12 @@ int sortMenu(int isVector) {
 }
 
 int measurementMenu(int isVector) {
+    /*
+     *  Виклик меню виміру алгоритму сортування.
+     *  Просить користувача ввести розмір вектору/масиву
+     *
+     *  Отримує і рисує таблицю з результатами вимірів
+    */
     int res;
     measurement_s m;
 
@@ -124,10 +154,10 @@ int measurementMenu(int isVector) {
     } else {
         printf("P = ");
         scanf("%d", &P);
-        printf("\nN = ");
-        scanf("%d", &N);
         printf("\nM = ");
         scanf("%d", &M);
+        printf("\nN = ");
+        scanf("%d", &N);
     }
 
     clear();
@@ -150,15 +180,46 @@ int measurementMenu(int isVector) {
     return res;
 }
 
+int selectVectorSizeMenu() {
+    /*
+     * Меню вибору розміру вектора
+     */
+    printf("N = ");
+    scanf("%d", &N);
+    clear();
+    return 0;
+}
+
+int selectArray3DSizeMenu() {
+    /*
+     * Меню вибору розміру масиву
+     */
+    printf("P = ");
+    scanf("%d", &P);
+    printf("\nM = ");
+    scanf("%d", &M);
+    printf("\nN = ");
+    scanf("%d", &N);
+    clear();
+    return 0;
+}
+
 int mainMenu() {
+    /*
+     * Головне меню програми
+     *
+     * В залежності від вибору пункту користувача стартує цикл відрисовки меню
+     */
     int res;
-    const int menuLength = 5;
-    const char menu[5][28] = {
+    const int menuLength = 7;
+    const char menu[7][28] = {
             "Exit",
             "Vector Sorting Measurement",
             "Array3D Sorting Measurement",
             "Vector Sorting Test",
-            "Array3D Sorting Test"
+            "Array3D Sorting Test",
+            "Select Vector size",
+            "Select Array3D size"
     };
 
     for (int i = 1; i < menuLength; i++)
@@ -185,6 +246,12 @@ int mainMenu() {
         case 4:
             while (sortMenu(0));
             break;
+        case 5:
+            while (selectVectorSizeMenu());
+            break;
+        case 6:
+            while (selectArray3DSizeMenu());
+            break;
         default:
             break;
     }
@@ -193,6 +260,11 @@ int mainMenu() {
 }
 
 int startMenu() {
+    /*
+     * Стартове меню програми.
+     *
+     * Показує данні автора роботи
+     */
     int res;
     const int labelsLength = 5;
     const char labels[5][19] = {
@@ -227,6 +299,9 @@ int startMenu() {
 }
 
 void menu() {
+    /*
+     * Точка запуску стартового меню
+     */
     clear();
     while (startMenu());
 }

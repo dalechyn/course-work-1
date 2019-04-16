@@ -2,6 +2,13 @@
 #include "common.h"
 #include "sortingArray3D.h"
 
+/*
+ * МОДУЛЬ sortingArray
+ *
+ * Всі функції описані в цьому модулі сортують тривимірний масив
+ * і повертають час його роботи
+ */
+
 clock_t sortArr3DSelect1() {
     int swapped, Elem;
     int L, R, j, i, ii, jj, k;
