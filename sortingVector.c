@@ -8,26 +8,6 @@
  * і повертають час його роботи
  */
 
-clock_t sortVectorExchange3() {
-    int R, k, tmp;
-    clock_t time_start, time_stop;
-    time_start = clock();
-    R = N - 1;
-    while (R > 0) {
-        k = 0;
-        for (int i = 0; i < R; i++)
-            if (Vector[i] > Vector[i + 1]) {
-                tmp = Vector[i];
-                Vector[i] = Vector[i + 1];
-                Vector[i + 1] = tmp;
-                k = i;
-            }
-        R = k;
-    }
-    time_stop = clock();
-    return time_stop - time_start;
-}
-
 clock_t sortVectorSelect1() {
     int Min, imin;
     clock_t time_start, time_stop;
@@ -74,8 +54,28 @@ clock_t sortVectorSelect3() {
         else
             Vector[imax] = Vector[R];
         Vector[R] = Max;
-        L = L + 1;
-        R = R - 1;
+        L++;
+        R--;
+    }
+    time_stop = clock();
+    return time_stop - time_start;
+}
+
+clock_t sortVectorExchange3() {
+    int R, k, tmp;
+    clock_t time_start, time_stop;
+    time_start = clock();
+    R = N - 1;
+    while (R > 0) {
+        k = 0;
+        for (int i = 0; i < R; i++)
+            if (Vector[i] > Vector[i + 1]) {
+                tmp = Vector[i];
+                Vector[i] = Vector[i + 1];
+                Vector[i + 1] = tmp;
+                k = i;
+            }
+        R = k;
     }
     time_stop = clock();
     return time_stop - time_start;

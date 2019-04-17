@@ -146,7 +146,7 @@ void printArray3D() {
             printf("%d ],\n\t\t[ ", Arr3D[k][i][N - 1]);
         }
         for(j = 0; j < N - 1; j++)
-            printf("%d, ", Arr3D[k][j][N - 1]);
+            printf("%d, ", Arr3D[k][M - 1][j]);
         printf("%d ]\n\t],\n\t\t[ ", Arr3D[k][M - 1][N - 1]);
     }
     for(i = 0; i < M - 1; i++) {
@@ -156,6 +156,6 @@ void printArray3D() {
             printf("%d ],\n\t\t[ ", Arr3D[P - 1][i][N - 1]);
     }
     for(j = 0; j < N - 1; j++)
-            printf("%d, ", Arr3D[P - 1][j][N - 1]);
+            printf("%d, ", Arr3D[P - 1][M - 1][j]);
         printf("%d ]\n\t]\n]\n", Arr3D[P - 1][M - 1][N - 1]);
 }

@@ -13,7 +13,7 @@
  *  Такі функції займаються прорисовкою окремого кадра меню
  *
  *  Повертаєме значення res є результатом вибору користувачем пункта меню.
- *  При вибору користувачем будь-якого пункта меню окрім нульового (вихід),
+ *  При виборі користувачем будь-якого пункта меню окрім нульового (вихід),
  *  запускається цикл прорисовки наступного меню, яке повертатиме результат
  *  вибору наступного пункту меню.
  *
@@ -36,76 +36,79 @@ void printErr() {
     printf("\nChoose: ");
 }
 
-int orderMenu(int isVector, int sort) {
+int resultsMenu(int isVector, int sort, int order) {
     /*
-        Виклик меню вибору порядку заповнення данних.
-        Точка запуску алгоритмів сортування.
-    */
+     *  Точка запуску алгоритмів сортування.
+     */
     int res;
-    const int menuLength = 4;
-    const char menu[4][23] = {
-            "Exit to Sort Menu",
-            "Ordered Vector",
-            "Reverse-ordered Vector",
-            "Randomized Vector",
-    };
-
-    for (int i = 1; i < menuLength; i++)
-        printf("%d. %s\n", i, menu[i]);
-
-    printExit("Exit to Main Menu");
-
-    scanf("%d", &res);
-    while (res < 0 || res > menuLength - 1) {
-        printErr();
-        scanf("%d", &res);
-    }
-
-    clear();
     if (isVector) {
         initVector();
-        fillVector(res);
+        fillVector(order);
         printf("Vector before sorting:\n");
         printVector();
         switch (sort) {
-            case 1:
-                sortVectorSelect1();
-            case 2:
-                sortVectorSelect3();
-            case 3:
-                sortVectorExchange3();
-            default:
-                break;
+            case 1: sortVectorSelect1(); break;
+            case 2: sortVectorSelect3(); break;
+            case 3: sortVectorExchange3(); break;
+            default: break;
         }
         printf("Vector after sorting:\n");
         printVector();
         freeVector();
     } else {
         initArray3D();
-        fillArray3D(res);
+        fillArray3D(order);
         printf("Array3D before sorting:\n");
         printArray3D();
         switch (sort) {
-            case 1:
-                sortArr3DSelect1();
-            case 2:
-                sortArr3DSelect3();
-            case 3:
-                sortArr3DExchange3();
-            default:
-                break;
+            case 1: sortArr3DSelect1(); break;
+            case 2: sortArr3DSelect3(); break;
+            case 3: sortArr3DExchange3(); break;
+            default: break;
         }
         printf("Array3D after sorting:\n");
         printArray3D();
         freeArray3D();
     }
-    printExit("Exit to Order menu");
+
+    printExit("Exit to order menu");
     scanf("%d", &res);
     while (res != 0) {
         printErr();
         scanf("%d", &res);
     }
     clear();
+
+    return res;
+}
+
+int orderMenu(int isVector, int sort) {
+    /*
+     *  Виклик меню вибору порядку заповнення данних.
+    */
+    int res;
+    const int menuLength = 4;
+    const char menu[4][23] = {
+            "Exit to Sort Menu",
+            "Ordered",
+            "Reverse-ordered",
+            "Randomized",
+    };
+
+    for (int i = 1; i < menuLength; i++)
+        printf("%d. %s\n", i, menu[i]);
+
+    printExit(menu[0]);
+
+    scanf("%d", &res);
+    while (res < 0 || res > menuLength - 1) {
+        printErr();
+        scanf("%d", &res);
+    }
+    clear();
+
+    if (res != 0) while(resultsMenu(isVector, sort, res));
+
     return res;
 }
 
@@ -234,26 +237,13 @@ int mainMenu() {
 
     clear();
     switch (res) {
-        case 1:
-            while (measurementMenu(1));
-            break;
-        case 2:
-            while (measurementMenu(0));
-            break;
-        case 3:
-            while (sortMenu(1));
-            break;
-        case 4:
-            while (sortMenu(0));
-            break;
-        case 5:
-            while (selectVectorSizeMenu());
-            break;
-        case 6:
-            while (selectArray3DSizeMenu());
-            break;
-        default:
-            break;
+        case 1: while (measurementMenu(1)); break;
+        case 2: while (measurementMenu(0)); break;
+        case 3: while (sortMenu(1)); break;
+        case 4: while (sortMenu(0)); break;
+        case 5: while (selectVectorSizeMenu()); break;
+        case 6: while (selectArray3DSizeMenu()); break;
+        default: break;
     }
 
     return res;
