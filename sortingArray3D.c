@@ -1,4 +1,3 @@
-#include <math.h>
 #include "common.h"
 #include "sortingArray3D.h"
 
@@ -126,7 +125,6 @@ clock_t sortArr3DSelect3() {
     return time_stop - time_start;
 }
 
-
 clock_t sortArr3DExchange3() {
     int Ri, Rj, ki, kj, tmp;
     clock_t time_start, time_stop;
@@ -156,7 +154,7 @@ clock_t sortArr3DExchange3() {
                         ki = 0;
                         kj = j;
                 }
-                for (int i = 0; i < N - 1; i++)
+                for (int i = 0; i < M - 1; i++)
                     if (Arr3D[k][i][j] > Arr3D[k][i + 1][j]) {
                         tmp = Arr3D[k][i][j];
                         Arr3D[k][i][j] = Arr3D[k][i + 1][j];
