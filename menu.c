@@ -165,13 +165,13 @@ int measurementMenu(int isVector) {
 
     clear();
 
-    printf("%-20s%-19s%-18s%-20s\n", "", "|Ordered|", "|Reversed|", "|Randomized|");
+    printf("%-20s%-19s%-18s%-20s\n", "", "|Ordered|", "|Randomized|", "|Reversed|");
     m = measure(isVector, 1);
-    printf("%-9s%20f%20f%20f\n", "Select1", m.ordered, m.reversed, m.randomized);
+    printf("%-9s%20f%20f%20f\n", "Select1", m.ordered, m.randomized, m.reversed);
     m = measure(isVector, 2);
-    printf("%-9s%20f%20f%20f\n", "Select3", m.ordered, m.reversed, m.randomized);
+    printf("%-9s%20f%20f%20f\n", "Select3", m.ordered, m.randomized, m.reversed);
     m = measure(isVector, 3);
-    printf("%-9s%20f%20f%20f\n\n", "Exchange3", m.ordered, m.reversed, m.randomized);
+    printf("%-9s%20f%20f%20f\n\n", "Exchange3", m.ordered, m.randomized, m.reversed);
 
     printExit("Exit to Main Menu");
     scanf("%d", &res);
